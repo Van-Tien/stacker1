@@ -14,19 +14,20 @@ module Stacker
 
         old_formatter = logger.formatter
 
-        logger.formatter =  proc do |level, time, prog, msg|
+        logger.formatter =  proc do |severity, level, time, prog, msg|
           unless msg.start_with?("\e")
             color = case level
                     when 'FATAL' then :red
                     when 'WARN'  then :yellow
                     when 'INFO'  then :blue
+                    when 'ERROR' then :red
                     when 'DEBUG' then '333333'
                     else              :default
                     end
             msg = msg.color(color)
           end
 
-          old_formatter.call level, time, prog, msg
+          old_formatter.call severity, level, time, prog, msg
         end
       end
 
@@ -53,7 +54,7 @@ module Stacker
         STDOUT.sync = true
         logger = Logger.new STDOUT
         logger.level = Logger::DEBUG
-        logger.formatter = proc { |_, _, _, msg| "#{msg}\n" }
+        logger.formatter = proc { |_, _, _, _, msg| "#{msg}\n" }
         PrettyLogger.new logger
       end
     end
