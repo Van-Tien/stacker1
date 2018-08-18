@@ -31,7 +31,7 @@ module Stacker
         end
       end
 
-      %w[ debug info warn fatal ].each do |level|
+      %w[ debug error info warn fatal ].each do |level|
         define_method level do |msg, opts = {}|
           if opts.include? :highlight
             msg = CodeRay.scan(msg, opts[:highlight]).terminal
