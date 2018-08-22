@@ -178,13 +178,13 @@ JSON
         if failure_reason =~ /stack policy/
           raise StackPolicyError.new failure_reason
         else
-          Stacker.logger.fatal "#{name} Status => #{stack_status}"
+          cfer tail "#{name} Status => #{stack_status}"
+          #Stacker.logger.fatal "#{name} Status => #{stack_status}"
           raise Error.new "Failure Reason: #{failure_reason}"
         end
       else
-        client.tail number: 1, follow: true do |event|
-          # Called for each CloudFormation event, as they occur, until the stack enters a COMPLETE or FAILED state.
-        end
+        cfer tail "#{name} Status => #{stack_status}"
+        #Stacker.logger.debug "#{name} Status => #{stack_status}"
       end
     end
 
