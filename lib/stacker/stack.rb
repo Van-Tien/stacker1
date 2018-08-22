@@ -103,7 +103,7 @@ JSON
         )
       end
 
-      Stacker.logger.debug 'Creating stack'
+      Stacker.logger.info 'Creating stack'
 		
 	  hashParams = parameters.resolved.map { |key, value| {"parameter_key" => key, "parameter_value" => value} }
 	  
@@ -122,7 +122,7 @@ JSON
     end
 
     def update options = {}
-	Stacker.logger.debug 'update stack called'
+	Stacker.logger.info 'update stack called'
       options.assert_valid_keys(:blocking, :allow_destructive)
 
       blocking = options.fetch(:blocking, true)
@@ -134,7 +134,7 @@ JSON
         )
       end
 
-      Stacker.logger.debug 'Updating stack'
+      Stacker.logger.info 'Updating stack'
 	  
 	  hashParams = parameters.resolved.map { |key, value| {"parameter_key" => key, "parameter_value" => value} }
 	  
@@ -157,7 +157,7 @@ JSON
       when /does not exist/
         raise DoesNotExistError.new err.message
       when /No updates/
-        Stacker.logger.debug 'No real update took place. In order to apply these updates some existing resoources need to be updated'
+        Stacker.logger.info 'No real update took place. In order to apply these updates some existing resoources need to be updated'
       else
         raise Error.new err.message
       end
