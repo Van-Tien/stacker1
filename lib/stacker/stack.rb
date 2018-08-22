@@ -182,7 +182,9 @@ JSON
           raise Error.new "Failure Reason: #{failure_reason}"
         end
       else
-        Stacker.logger.debug "#{name} Status => #{stack_status}"
+        client.tail number: 1, follow: true do |event|
+          # Called for each CloudFormation event, as they occur, until the stack enters a COMPLETE or FAILED state.
+        end
       end
     end
 
