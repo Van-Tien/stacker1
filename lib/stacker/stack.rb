@@ -79,7 +79,7 @@ JSON
     def capabilities
       @capabilities ||= Capabilities.new self
     end
-
+    def tail(options = {})
     def outputs  
 	  @outputs = Hash[client.outputs.map { |output| [ output.output_key, output.output_value ] }]  
 	  return @outputs
@@ -178,13 +178,11 @@ JSON
         if failure_reason =~ /stack policy/
           raise StackPolicyError.new failure_reason
         else
-          tail(options = {})
           client.tail "number: 1, follow: true do |event| => #{stack_status}"
           #Stacker.logger.fatal "#{name} Status => #{stack_status}"
           raise Error.new "Failure Reason: #{failure_reason}"
         end
       else
-        tail(options = {})
         client.tail "number: 1, follow: true do |event| => #{stack_status}"
         #Stacker.logger.debug "#{name} Status => #{stack_status}"
       end
