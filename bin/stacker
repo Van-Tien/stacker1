@@ -3,7 +3,6 @@
 require 'rubygems'
 require 'stacker'
 require 'stacker/cli'
-require 'cfer'
 
 trap('INT') { puts ''; exit }
 
